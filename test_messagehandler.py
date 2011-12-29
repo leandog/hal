@@ -40,4 +40,7 @@ class Test_MessageHandler:
         self.message_handler.handle(self.message_with_body('@hal flarxlebrabt it.'))
         assert self.sent_reply("I'm sorry Dave, I can't do that.")
 
+    def test_can_extract_command(self):
+        cmd = self.message_handler.extract_command(self.message_with_body('@hal start pomodoro'))
+        assert cmd == 'start pomodoro'
 

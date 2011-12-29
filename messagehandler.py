@@ -24,4 +24,6 @@ class MessageHandler:
     def is_replayed_message(self, msg):
         return msg['id'] == None or msg['id'] == ''
 
+    def extract_command(self, msg):
+        return re.sub(r'^\s*@hal\b\s*', '', msg['body'], re.IGNORECASE)
 
