@@ -24,3 +24,6 @@ class Test_MessageFilter:
     def test_is_replayed_message_returns_True_when_id_is_empty_string(self):
         assert MessageFilter().is_replayed_message({'body':'testing...', 'id':''})
 
+    def test_is_replayed_message_returns_True_when_id_is_None(self):
+        assert MessageFilter().is_replayed_message({'body':'testing...', 'id':None})
+
