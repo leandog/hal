@@ -1,5 +1,6 @@
 
 from messagehandler import *
+from dingus import Dingus, DontCare
 
 class Test_MessageHandler:
 
@@ -23,4 +24,11 @@ class Test_MessageHandler:
 
     def test_ignores_messages_with_None_for_id(self):
         assert MessageHandler(None).is_replayed_message({'body':'testing...', 'id':None})
+
+    def test_response_Im_sorry_Dave_for_unrecognized_commands(self):
+        reply_sender = Dingus('reply_sender')
+        MessageHandler(reply_sender).handle(self.message_with_body('@hal flarxlebrabt it.'))
+        assert len(reply_sender.calls('reply', DontCare, "I'm sorry Dave, I can't do that.")) == 1
+
+        
 
