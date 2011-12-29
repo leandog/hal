@@ -41,6 +41,9 @@ class Test_MessageHandler:
         assert self.sent_reply("I'm sorry Dave, I can't do that.")
 
     def test_can_extract_command(self):
-        cmd = self.message_handler.extract_command(self.message_with_body('@hal start pomodoro'))
-        assert cmd == 'start pomodoro'
+        for body in ['@hal start pomodoro', 'Hal, start pomodoro', 'Hal 9000, start pomodoro']:
+            yield self.check_extract_command, self.message_with_body(body), 'start pomodoro'
+
+    def check_extract_command(self, msg, command):
+        assert self.message_handler.extract_command(msg) == command
 

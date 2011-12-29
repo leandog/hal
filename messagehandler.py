@@ -25,5 +25,9 @@ class MessageHandler:
         return msg['id'] == None or msg['id'] == ''
 
     def extract_command(self, msg):
-        return re.sub(r'^\s*@hal\b\s*', '', msg['body'], re.IGNORECASE)
+        return re.sub(r'^\s*@?hal(?:\s*9000)?(?:\s*,|\b)\s*',
+                      '',
+                      msg['body'],
+                      flags=re.IGNORECASE
+                      )
 
