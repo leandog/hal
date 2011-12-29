@@ -21,3 +21,6 @@ class Test_MessageFilter:
     def test_is_replayed_message_returns_False_for_arbitrary_message(self):
         assert not MessageFilter().is_replayed_message(self.message_with_body('Hello, world!'))
 
+    def test_is_replayed_message_returns_True_when_id_is_empty_string(self):
+        assert MessageFilter().is_replayed_message({'body':'testing...', 'id':''})
+
