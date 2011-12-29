@@ -1,7 +1,7 @@
 
-from messagefilter import *
+from messagehandler import *
 
-class Test_MessageFilter:
+class Test_MessageHandler:
 
     def message_with_body(self, body):
         return {'id':'foo42', 'body': body}
