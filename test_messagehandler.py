@@ -11,6 +11,13 @@ class Test_MessageHandler:
     def message_with_body(self, body):
         return {'id':'foo42', 'body':body, 'mucnick':'Dave'}
 
+    def sent_reply(self, body):
+        if type(body) != type(''):
+            return False
+        calls = self.reply_sender.calls('reply', DontCare, body)
+        return len(calls) == 1
+
+
     def test_ignores_arbitrary_message(self):
         assert self.message_handler.should_ignore(self.message_with_body('@joe, dude, what is up?'))
 
@@ -31,6 +38,6 @@ class Test_MessageHandler:
 
     def test_response_Im_sorry_Dave_for_unrecognized_commands(self):
         self.message_handler.handle(self.message_with_body('@hal flarxlebrabt it.'))
-        assert len(self.reply_sender.calls('reply', DontCare, "I'm sorry Dave, I can't do that.")) == 1
+        assert self.sent_reply("I'm sorry Dave, I can't do that.")
 
 
