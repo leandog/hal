@@ -1,3 +1,4 @@
+import messagehandler
 import sleekxmpp
 
 JABBER_ID   = '12552_63278@chat.hipchat.com'
@@ -10,6 +11,7 @@ class Hal(sleekxmpp.ClientXMPP):
     def __init__(self):
         print "Booting..."
         sleekxmpp.ClientXMPP.__init__(self, JABBER_ID, PASSWORD)
+        self.message_handler = messagehandler.MessageHandler(self)
         self.register_plugin('xep_0030') # Service Discovery
         self.register_plugin('xep_0004') # Data Forms
         self.register_plugin('xep_0045') # MUC
@@ -25,7 +27,8 @@ class Hal(sleekxmpp.ClientXMPP):
         self.plugin['xep_0045'].joinMUC(ROOM_ID, NICKNAME, wait=True)
 
     def muc_message(self, msg):
-        if msg['mucnick'] != NICKNAME and NICKNAME in msg['body']:
-            self.send_message(mto = msg['from'].bare,
-                              mbody = "I'm sorry, %s, I can't do that." % msg['mucnick'],
-                              mtype = 'groupchat')
+        self.message_handler.handle(msg)
+
+    def reply(self, msg, body):
+        self.send_message(mto = msg['from'].bare, mbody = body, mtype = 'groupchat')
+

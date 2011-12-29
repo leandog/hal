@@ -6,6 +6,11 @@ class MessageHandler:
     def __init__(self, reply_sender):
         self.reply_sender = reply_sender
 
+    def handle(self, msg):
+        if self.should_ignore(msg):
+            return
+        self.reply_sender.reply(msg, "I'm sorry %s, I can't do that." % msg['mucnick'])
+
     def should_ignore(self, msg):
         if not self.is_addressed_to_me(msg):
             return True
